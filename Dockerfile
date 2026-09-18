@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.9-slim
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends ffmpeg opus-tools && \
@@ -8,7 +8,7 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-RUN python -m pip install --upgrade pip && \
+RUN python -m pip install --upgrade "pip<24" && \
     python -m pip install --no-cache-dir -r requirements.txt
 
 COPY . .
