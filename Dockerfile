@@ -1,17 +1,16 @@
-#Python based docker image
-FROM python:3.9.5-buster
+FROM python:3.11-slim
 
-RUN apt-get update && apt-get upgrade -y
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ffmpeg opus-tools && \
+    rm -rf /var/lib/apt/lists/*
 
-#Installing Requirements
-RUN apt-get install -y ffmpeg python3-pip opus-tools
+WORKDIR /app
 
-#Updating pip
-RUN python3.9 -m pip install -U pip
+COPY requirements.txt .
+
+RUN python -m pip install --upgrade pip && \
+    python -m pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN python3.9 -m pip install -U -r requirements.txt
-
-#Running VCBot
-CMD ["python3.9","main.py"]
+CMD ["python", "main.py"]
