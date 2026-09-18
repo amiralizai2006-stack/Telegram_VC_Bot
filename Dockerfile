@@ -4,6 +4,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     ffmpeg \
     opus-tools \
+    pkg-config \
     gcc \
     g++ \
     make \
